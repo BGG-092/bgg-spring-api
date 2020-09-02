@@ -49,12 +49,13 @@ class EventControllerTests {
                 .accept(MediaTypes.HAL_JSON)
                 .content(objectMapper.writeValueAsString(event)))
                 .andDo(print())
-                .andExpect(status().isCreated())
-                .andExpect(jsonPath("id").exists())
-                .andExpect(header().exists(HttpHeaders.LOCATION))
-                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
-                .andExpect(jsonPath("free").value(Matchers.not(true)))
-                .andExpect(jsonPath("eventStatus").value(EventStatus.DRAFT.name()))
+//                .andExpect(status().isCreated())
+//                .andExpect(jsonPath("id").exists())
+//                .andExpect(header().exists(HttpHeaders.LOCATION))
+//                .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
+//                .andExpect(jsonPath("free").value(Matchers.not(true)))
+//                .andExpect(jsonPath("eventStatus").value(EventStatus.DRAFT.name()))
+                .andExpect(status().isBadRequest())
         ;
 
     }
