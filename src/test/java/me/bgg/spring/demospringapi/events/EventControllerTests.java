@@ -2,6 +2,7 @@ package me.bgg.spring.demospringapi.events;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.hamcrest.Matchers;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,6 +59,39 @@ class EventControllerTests {
                 .andExpect(status().isBadRequest())
         ;
 
+    }
+
+    @Test
+    @DisplayName("입력 값이 비어있는 경우 에러가 발생하는 테스트")
+    void createEvent_Bad_Request_Empty_Input() throws Exception {
+        EventDto eventDto = EventDto.builder().build();
+
+        this.mockMvc.perform(post("/api/events")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(this.objectMapper.writeValueAsString(eventDto)))
+                    .andDo(print())
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createEvent_Bad_Request_Wrong_Input() throws Exception {
+        EventDto eventDto = EventDto.builder()
+                .name("Spring")
+                .description("REST API")
+                .beginEnrollmentDateTime(LocalDateTime.of(2020,8,31,22,10))
+                .closeEnrollmentDateTime(LocalDateTime.of(2020,8,30,22,10))
+                .beginEventDateTime(LocalDateTime.of(2020,8,31,22,10))
+                .endEventDateTime(LocalDateTime.of(2020,8,30,22,10))
+                .maxPrice(100)
+                .basePrice(1000)
+                .limitOfEnrollment(100)
+                .build();
+
+        this.mockMvc.perform(post("/api/events")
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(this.objectMapper.writeValueAsString(eventDto)))
+                .andDo(print())
+                .andExpect(status().isBadRequest());
     }
 
 
