@@ -1,4 +1,4 @@
-package me.bgg.spring.demospringapi.events;
+package me.bgg.spring.demospringapi.events.enums;
 
 public enum EventStatus {
 

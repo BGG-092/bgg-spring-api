@@ -1,6 +1,7 @@
-package me.bgg.spring.demospringapi.events;
+package me.bgg.spring.demospringapi.events.validators;
 
 
+import me.bgg.spring.demospringapi.events.dto.EventDto;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 

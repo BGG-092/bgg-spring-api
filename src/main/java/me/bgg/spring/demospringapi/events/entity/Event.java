@@ -1,6 +1,7 @@
-package me.bgg.spring.demospringapi.events;
+package me.bgg.spring.demospringapi.events.entity;
 
 import lombok.*;
+import me.bgg.spring.demospringapi.events.enums.EventStatus;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;

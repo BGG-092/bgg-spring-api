@@ -1,6 +1,7 @@
 package me.bgg.spring.demospringapi.events;
 
 
+import me.bgg.spring.demospringapi.events.entity.Event;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

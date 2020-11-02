@@ -1,9 +1,13 @@
-package me.bgg.spring.demospringapi.events;
+package me.bgg.spring.demospringapi.events.controller;
 
 
+import me.bgg.spring.demospringapi.events.validators.EventValidator;
+import me.bgg.spring.demospringapi.events.dto.EventDto;
+import me.bgg.spring.demospringapi.events.entity.Event;
+import me.bgg.spring.demospringapi.events.repository.EventRepository;
+import me.bgg.spring.demospringapi.events.service.EventService;
 import org.modelmapper.ModelMapper;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.hateoas.MediaTypes;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,21 +25,25 @@ import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 @RequestMapping(value = "/api/events", produces = MediaTypes.HAL_JSON_VALUE)
 public class EventController {
 
-    private  final  EventRepository eventRepository;
+    private  final EventRepository eventRepository;
 
     private  final ModelMapper modelMapper;
 
     private final EventValidator eventValidator;
 
-    public EventController(EventRepository eventRepository, ModelMapper modelMapper, EventValidator eventValidator) {
+    private final EventService eventService;
+
+    public EventController(EventRepository eventRepository, ModelMapper modelMapper, EventValidator eventValidator, EventService eventService) {
         this.eventRepository = eventRepository;
         this.modelMapper = modelMapper;
         this.eventValidator = eventValidator;
+        this.eventService = eventService;
     }
 
 
     @PostMapping
-    public ResponseEntity createEvent(@RequestBody @Valid EventDto eventDto, Errors errors){
+    public ResponseEntity createEvent(@RequestBody @Valid EventDto eventDto, Errors errors) throws Exception {
+
         if(errors.hasErrors()){
             return  ResponseEntity.badRequest().body(errors);
         }
@@ -46,7 +54,8 @@ public class EventController {
         }
 
         Event event = modelMapper.map(eventDto, Event.class);
-        Event newEvent = this.eventRepository.save(event);
+
+        Event newEvent = eventService.update(event);
         URI createdUri = linkTo(EventController.class).slash(newEvent.getId()).toUri();
         return ResponseEntity.created(createdUri).body(event);
     }

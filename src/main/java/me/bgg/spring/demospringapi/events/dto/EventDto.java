@@ -1,4 +1,4 @@
-package me.bgg.spring.demospringapi.events;
+package me.bgg.spring.demospringapi.events.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
